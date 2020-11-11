@@ -50,16 +50,12 @@ class NewPaletteForm extends Component {
     }
     randomColor(){
       const allColors = this.props.palettes.map(p => p.colors).flat();
-      let rand;
-      let randomColor;
       let isDuplicateColors = true;
       while(isDuplicateColors){
-         rand = Math.floor(Math.random() * allColors.length);
-         randomColor = allColors[rand];
-        isDuplicateColors = this.state.colors.some(color => color.name === randomColor.name)
+         isDuplicateColors = this.state.colors.some(color => color.name === allColors[ Math.floor(Math.random() * allColors.length)].name)
       }
       this.setState({
-        colors : [...this.state.colors, allColors[rand]]
+        colors : [...this.state.colors, allColors[ Math.floor(Math.random() * allColors.length)]]
       });
     }
     addNewColor(newColor){
@@ -109,8 +105,7 @@ class NewPaletteForm extends Component {
                 open={open}
                 classes={{
                 paper: classes.drawerPaper,
-                }}
-            >
+                }} >
                 <div className={classes.drawerHeader}>
                 <IconButton onClick={this.handleDrawerClose}>
                     <ChevronLeftIcon /> 
@@ -141,8 +136,7 @@ class NewPaletteForm extends Component {
             <main
                 className={classNames(classes.content, {
                 [classes.contentShift]: open,
-                })}
-            >
+                })} >
                 <div className={classes.drawerHeader} />
                     <DraggableColorList 
                      colors={colors} 
